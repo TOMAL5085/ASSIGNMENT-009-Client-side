@@ -11,7 +11,7 @@ export default function ProfilePage() {
       <div className="main-container max-w-4xl">
         <div className="grid gap-6">
           <div
-            className="rounded-[34px] px-8 py-10 text-white"
+            className="strong-card rounded-[34px] px-8 py-10 text-white"
             style={{ background: "var(--hero-strong)" }}
           >
             <p className="eyebrow bg-white/12 text-white">Learner Profile</p>

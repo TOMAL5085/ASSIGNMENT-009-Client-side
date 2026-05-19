@@ -74,7 +74,7 @@ export default function TutorsPage() {
           </div>
 
           <div
-            className="flex min-h-[320px] items-center rounded-[34px] px-7 py-8 text-white"
+            className="strong-card flex min-h-[320px] items-center rounded-[34px] px-7 py-8 text-white"
             style={{ background: "var(--hero-strong)" }}
           >
             <div className="grid w-full gap-4 sm:grid-cols-2">

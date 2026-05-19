@@ -42,7 +42,7 @@ export default function LoginPage() {
       <div className="main-container">
         <div className="grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
           <div
-            className="rounded-[36px] px-7 py-10 text-white md:px-10 md:py-12"
+            className="strong-card rounded-[36px] px-7 py-10 text-white md:px-10 md:py-12"
             style={{ background: "var(--hero-strong)" }}
           >
             <p className="eyebrow bg-white/12 text-white">Learner Access</p>

@@ -103,7 +103,7 @@ export default function HomePage() {
 
             <div className="grid gap-5">
               <div
-                className="soft-card rounded-[34px] p-7 text-white"
+                className="soft-card strong-card rounded-[34px] p-7 text-white"
                 style={{ background: "var(--hero-strong)" }}
               >
                 <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/70">
@@ -234,7 +234,7 @@ export default function HomePage() {
             </div>
 
             <div
-              className="rounded-[36px] px-8 py-10 text-white md:px-10"
+              className="strong-card rounded-[36px] px-8 py-10 text-white md:px-10"
               style={{ background: "var(--hero-strong)" }}
             >
               <p className="text-sm font-bold uppercase tracking-[0.22em] text-white/70">

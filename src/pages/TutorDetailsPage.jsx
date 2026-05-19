@@ -57,7 +57,7 @@ export default function TutorDetailsPage() {
           <div className="grid gap-6">
             <img src={tutor.photo} alt={tutor.tutorName} className="glass-card h-full min-h-[460px] rounded-[34px] object-cover" />
             <div
-              className="rounded-[34px] px-7 py-8 text-white"
+              className="strong-card rounded-[34px] px-7 py-8 text-white"
               style={{ background: "var(--hero-strong)" }}
             >
               <div className="flex items-center gap-3">

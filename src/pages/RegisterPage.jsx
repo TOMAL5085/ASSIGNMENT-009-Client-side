@@ -170,7 +170,7 @@ export default function RegisterPage() {
           </div>
 
           <div
-            className="rounded-[36px] px-7 py-10 text-white md:px-10 md:py-12"
+            className="strong-card rounded-[36px] px-7 py-10 text-white md:px-10 md:py-12"
             style={{ background: "var(--hero-strong)" }}
           >
             <p className="eyebrow bg-white/12 text-white">Student Setup</p>

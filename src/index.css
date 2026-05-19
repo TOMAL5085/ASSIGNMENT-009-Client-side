@@ -98,6 +98,15 @@ textarea {
   border-color: var(--brand);
 }
 
+.strong-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.strong-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 32px 64px rgba(41, 56, 90, 0.25);
+}
+
 .section-gap {
   padding: 4.5rem 0;
 }
