@@ -1,6 +1,7 @@
-import { ArrowRight, BadgeCheck, CalendarRange, Sparkles } from "lucide-react";
+import { ArrowRight, BadgeCheck, CalendarRange, Sparkles, Upload } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import useDocumentTitle from "../hooks/useDocumentTitle";
@@ -24,12 +25,48 @@ function validatePassword(password) {
 export default function RegisterPage() {
   useDocumentTitle("Register");
   const { registerUser, loginWithGoogle } = useAuth();
+  const [uploading, setUploading] = useState(false);
+  const [photoURL, setPhotoURL] = useState("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
   const navigate = useNavigate();
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      // Using a demo API key if VITE_IMGBB_KEY is not provided
+      const apiKey = import.meta.env.VITE_IMGBB_KEY || "686036814b2d511101831448b476e3d2";
+      const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        const url = result.data.display_url;
+        setPhotoURL(url);
+        setValue("photoURL", url, { shouldValidate: true });
+        toast.success("Photo uploaded successfully!");
+      } else {
+        throw new Error("Upload failed");
+      }
+    } catch (error) {
+      toast.error("Failed to upload image. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   async function onSubmit(formData) {
     try {
@@ -72,8 +109,37 @@ export default function RegisterPage() {
                 <p className="mt-2 text-sm text-rose-500">{errors.email?.message}</p>
               </div>
               <div>
-                <label className="mb-2 block font-semibold">Photo URL</label>
-                <input className="field" placeholder="https://example.com/profile-photo.jpg" {...register("photoURL", { required: "Photo URL is required." })} />
+                <label className="mb-2 block font-semibold">Profile Photo</label>
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    id="photo-upload"
+                    onChange={handleImageUpload}
+                  />
+                  <label
+                    htmlFor="photo-upload"
+                    className={`field flex cursor-pointer items-center justify-center gap-3 border-dashed py-6 text-center transition-all ${
+                      uploading ? "opacity-50" : "hover:border-[var(--brand)]"
+                    }`}
+                  >
+                    {uploading ? (
+                      <span className="animate-pulse">Uploading...</span>
+                    ) : photoURL ? (
+                      <div className="flex items-center gap-3">
+                        <img src={photoURL} alt="Preview" className="h-10 w-10 rounded-full object-cover" />
+                        <span className="text-sm font-medium text-[var(--brand)]">Change Photo</span>
+                      </div>
+                    ) : (
+                      <>
+                        <Upload size={20} className="text-[var(--muted)]" />
+                        <span className="text-[var(--muted)]">Upload from your computer</span>
+                      </>
+                    )}
+                  </label>
+                  <input type="hidden" {...register("photoURL", { required: "Photo is required." })} />
+                </div>
                 <p className="mt-2 text-sm text-rose-500">{errors.photoURL?.message}</p>
               </div>
               <div>

@@ -1,3 +1,4 @@
+
 const serviceLinks = [
   "Browse tutors by subject",
   "Book class sessions online",
@@ -13,10 +14,79 @@ const companyLinks = [
 ];
 
 const socialLinks = [
-  { label: "Fb", name: "Facebook" },
-  { label: "Ig", name: "Instagram" },
-  { label: "Li", name: "LinkedIn" },
-  { label: "X", name: "X" },
+  {
+    name: "Facebook",
+    href: "https://facebook.com",
+    icon: (props) => (
+      <svg
+        {...props}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Instagram",
+    href: "https://instagram.com",
+    icon: (props) => (
+      <svg
+        {...props}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+      </svg>
+    ),
+  },
+  {
+    name: "LinkedIn",
+    href: "https://linkedin.com",
+    icon: (props) => (
+      <svg
+        {...props}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect width="4" height="12" x="2" y="9" />
+        <circle cx="4" cy="4" r="2" />
+      </svg>
+    ),
+  },
+  {
+    name: "X",
+    href: "https://x.com",
+    icon: (props) => (
+      <svg
+        {...props}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+      </svg>
+    ),
+  },
 ];
 
 export default function Footer() {
@@ -68,11 +138,13 @@ export default function Footer() {
             {socialLinks.map((item) => (
               <a
                 key={item.name}
-                href="#"
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={item.name}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] font-bold"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] transition-all hover:scale-110 hover:border-[var(--brand)] hover:bg-[var(--brand-soft)] hover:text-[var(--brand)]"
               >
-                {item.label}
+                <item.icon className="w-5 h-5" />
               </a>
             ))}
           </div>

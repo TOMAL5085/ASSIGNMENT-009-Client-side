@@ -22,57 +22,57 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route element={<MainLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="tutors" element={<TutorsPage />} />
-        <Route path="services" element={<ServicesPage />} />
-        <Route path="about" element={<AboutPage />} />
-        <Route
-          path="tutors/:id"
-          element={
-            <ProtectedRoute>
-              <TutorDetailsPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="add-tutor"
-          element={
-            <ProtectedRoute>
-              <AddTutorPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="my-tutors"
-          element={
-            <ProtectedRoute>
-              <MyTutorsPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="my-booked-sessions"
-          element={
-            <ProtectedRoute>
-              <MyBookedSessionsPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="profile"
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="auth-callback" element={<AuthCallbackPage />} />
-        <Route path="home" element={<Navigate to="/" replace />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
-    </Routes>
+          <Route index element={<HomePage />} />
+          <Route path="tutors" element={<TutorsPage />} />
+          <Route path="services" element={<ServicesPage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route
+            path="tutors/:id"
+            element={
+              <ProtectedRoute>
+                <TutorDetailsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="add-tutor"
+            element={
+              <ProtectedRoute>
+                <AddTutorPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="my-tutors"
+            element={
+              <ProtectedRoute>
+                <MyTutorsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="my-booked-sessions"
+            element={
+              <ProtectedRoute>
+                <MyBookedSessionsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="auth-callback" element={<AuthCallbackPage />} />
+          <Route path="home" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
     </>
   );
 }
