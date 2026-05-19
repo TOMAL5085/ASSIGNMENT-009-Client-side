@@ -121,9 +121,9 @@ export default function HomePage() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 {stats.map((item) => (
-                  <article key={item.label} className="soft-card rounded-[28px] p-6">
-                    <p className="text-3xl font-black text-[var(--brand)]">{item.value}</p>
-                    <p className="mt-2 font-semibold muted-text">{item.label}</p>
+                  <article key={item.label} className="soft-card group rounded-[28px] p-6 hover:!bg-[var(--brand)]">
+                    <p className="text-3xl font-black text-[var(--brand)] transition-colors group-hover:text-white">{item.value}</p>
+                    <p className="mt-2 font-semibold muted-text transition-colors group-hover:text-white/80">{item.label}</p>
                   </article>
                 ))}
               </div>
@@ -133,17 +133,29 @@ export default function HomePage() {
       </section>
 
       <section id="services" className="section-gap pt-0">
-        <div className="main-container grid gap-6 lg:grid-cols-3">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ staggerChildren: 0.15 }}
+          className="main-container grid gap-6 lg:grid-cols-3"
+        >
           {benefits.map((item) => (
-            <article key={item.title} className="soft-card rounded-[30px] p-7">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand-soft)]">
-                <item.icon size={24} className="text-[var(--brand)]" />
+            <motion.article
+              key={item.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="soft-card group rounded-[30px] p-7"
+            >
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand-soft)] transition-colors group-hover:bg-[var(--brand)]">
+                <item.icon size={24} className="text-[var(--brand)] transition-colors group-hover:text-white" />
               </div>
               <h3 className="mt-5 text-[1.55rem] font-bold">{item.title}</h3>
               <p className="mt-3 leading-7 muted-text">{item.text}</p>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       <section id="tutors" className="section-gap">
@@ -188,7 +200,7 @@ export default function HomePage() {
               ].map((point) => (
                 <div
                   key={point}
-                  className="flex items-start gap-3 rounded-[22px] bg-[var(--surface-strong)] px-4 py-4"
+                  className="flex items-start gap-3 rounded-[22px] bg-[var(--surface-strong)] px-4 py-4 transition-all hover:scale-[1.02] hover:bg-[var(--brand-soft)]"
                 >
                   <UserRoundSearch size={20} className="mt-1 text-[var(--brand)]" />
                   <p className="leading-7 muted-text">{point}</p>

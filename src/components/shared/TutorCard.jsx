@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 
 export default function TutorCard({ tutor }) {
   return (
-    <article className="soft-card flex h-full flex-col overflow-hidden rounded-[28px] border border-[rgba(15,23,42,0.12)] p-5 shadow-[0_18px_36px_rgba(15,23,42,0.08)]">
-      <img
-        src={tutor.photo}
-        alt={tutor.tutorName}
-        className="h-64 w-full rounded-[24px] object-cover"
-      />
+    <article className="soft-card group flex h-full flex-col overflow-hidden rounded-[28px] border border-[rgba(15,23,42,0.12)] p-5 shadow-[0_18px_36px_rgba(15,23,42,0.08)]">
+      <div className="overflow-hidden rounded-[24px]">
+        <img
+          src={tutor.photo}
+          alt={tutor.tutorName}
+          className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+      </div>
       <div className="flex flex-1 flex-col px-2 pb-2 pt-6">
         <h3 className="text-[2rem] font-bold leading-tight">{tutor.tutorName}</h3>
         <p className="mt-1 text-[1.2rem] text-[var(--muted)]">{tutor.subject}</p>
