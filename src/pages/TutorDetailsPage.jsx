@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { CalendarDays, Clock3, MapPin, Ticket } from "lucide-react";
+import { CalendarDays, Clock3, MapPin, ShieldCheck, Ticket } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -54,7 +54,24 @@ export default function TutorDetailsPage() {
     <section className="section-gap">
       <div className="main-container">
         <div className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
-          <img src={tutor.photo} alt={tutor.tutorName} className="glass-card h-full min-h-[460px] rounded-[34px] object-cover" />
+          <div className="grid gap-6">
+            <img src={tutor.photo} alt={tutor.tutorName} className="glass-card h-full min-h-[460px] rounded-[34px] object-cover" />
+            <div
+              className="rounded-[34px] px-7 py-8 text-white"
+              style={{ background: "var(--hero-strong)" }}
+            >
+              <div className="flex items-center gap-3">
+                <ShieldCheck size={20} />
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-white/72">
+                  Booking Logic Protected
+                </p>
+              </div>
+              <p className="mt-4 leading-7 text-white/82">
+                Slots reduce after successful booking, closed sessions are blocked automatically, and each learner receives a digital session token.
+              </p>
+            </div>
+          </div>
+
           <div className="glass-card rounded-[34px] p-8">
             <div className="flex flex-wrap items-center gap-3">
               <span className="rounded-full bg-[var(--brand-soft)] px-4 py-2 text-sm font-semibold text-[var(--brand-dark)]">
@@ -81,11 +98,19 @@ export default function TutorDetailsPage() {
               </div>
             </div>
 
-            <div className="mt-8 space-y-4 text-base muted-text">
-              <p className="flex items-center gap-3"><CalendarDays className="text-[var(--brand)]" size={18} /> Session date: {new Date(tutor.sessionStartDate).toLocaleDateString()}</p>
-              <p className="flex items-center gap-3"><Clock3 className="text-[var(--brand)]" size={18} /> {tutor.availableDays} • {tutor.availableTimeSlot}</p>
-              <p className="flex items-center gap-3"><MapPin className="text-[var(--brand)]" size={18} /> {tutor.location}</p>
-              <p className="flex items-center gap-3"><Ticket className="text-[var(--brand)]" size={18} /> {tutor.totalSlot} slots available • ${tutor.hourlyFee}/hr</p>
+            <div className="mt-8 grid gap-4">
+              <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)] px-5 py-4">
+                <p className="flex items-center gap-3 text-base muted-text"><CalendarDays className="text-[var(--brand)]" size={18} /> Session date: {new Date(tutor.sessionStartDate).toLocaleDateString()}</p>
+              </div>
+              <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)] px-5 py-4">
+                <p className="flex items-center gap-3 text-base muted-text"><Clock3 className="text-[var(--brand)]" size={18} /> {tutor.availableDays} / {tutor.availableTimeSlot}</p>
+              </div>
+              <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)] px-5 py-4">
+                <p className="flex items-center gap-3 text-base muted-text"><MapPin className="text-[var(--brand)]" size={18} /> {tutor.location}</p>
+              </div>
+              <div className="rounded-[24px] border border-[var(--border)] bg-[var(--surface)] px-5 py-4">
+                <p className="flex items-center gap-3 text-base muted-text"><Ticket className="text-[var(--brand)]" size={18} /> {tutor.totalSlot} slots available / ${tutor.hourlyFee} per hour</p>
+              </div>
             </div>
 
             <button type="button" className="btn-primary mt-8" onClick={() => setIsOpen(true)}>
@@ -119,7 +144,7 @@ export default function TutorDetailsPage() {
             </div>
             <div>
               <label className="mb-2 block font-semibold">Phone</label>
-              <input className="field" {...register("phone", { required: true })} />
+              <input className="field" placeholder="+8801XXXXXXXXX" {...register("phone", { required: true })} />
             </div>
             <div>
               <label className="mb-2 block font-semibold">Tutor ID</label>

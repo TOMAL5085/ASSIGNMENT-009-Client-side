@@ -1,33 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f4f8fb;
+  --background: #f6f8fc;
   --surface: #ffffff;
-  --surface-strong: #e9f0f8;
-  --text: #132238;
-  --muted: #5b7089;
-  --border: rgba(19, 34, 56, 0.12);
-  --brand: #0f8b8d;
-  --brand-dark: #0a5e60;
-  --brand-soft: #d7f3f0;
-  --accent: #ff8a4c;
-  --hero: linear-gradient(135deg, #0f8b8d 0%, #1f5f8b 55%, #0d3c61 100%);
-  --shadow: 0 20px 60px rgba(15, 77, 117, 0.12);
+  --surface-strong: #eef3fb;
+  --text: #1f2f48;
+  --muted: #67768f;
+  --border: rgba(31, 47, 72, 0.11);
+  --brand: #4f46e5;
+  --brand-dark: #2f2ba8;
+  --brand-soft: #e5e8ff;
+  --accent: #f97316;
+  --hero: linear-gradient(135deg, #eef2ff 0%, #ffffff 48%, #f5f8ff 100%);
+  --hero-strong: linear-gradient(135deg, #4238ca 0%, #3349d9 56%, #5a39c8 100%);
+  --shadow: 0 20px 55px rgba(41, 56, 90, 0.1);
   color-scheme: light;
 }
 
 .dark {
-  --background: #08131f;
-  --surface: #102133;
-  --surface-strong: #13283d;
+  --background: #0c1220;
+  --surface: #131d31;
+  --surface-strong: #19253c;
   --text: #eff8ff;
-  --muted: #9ab2c9;
-  --border: rgba(210, 228, 244, 0.12);
-  --brand: #5fe0d6;
-  --brand-dark: #7dece3;
-  --brand-soft: rgba(95, 224, 214, 0.12);
+  --muted: #9fb0cb;
+  --border: rgba(210, 228, 244, 0.1);
+  --brand: #8b84ff;
+  --brand-dark: #beb8ff;
+  --brand-soft: rgba(139, 132, 255, 0.15);
   --accent: #ffb067;
-  --hero: linear-gradient(135deg, #0d1f32 0%, #103650 55%, #0b5b60 100%);
+  --hero: linear-gradient(135deg, #121935 0%, #131d31 48%, #10162a 100%);
+  --hero-strong: linear-gradient(135deg, #3d32c5 0%, #2f50cb 52%, #6f2fc5 100%);
   --shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
   color-scheme: dark;
 }
@@ -40,8 +42,8 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(15, 139, 141, 0.1), transparent 25%),
-    radial-gradient(circle at bottom right, rgba(255, 138, 76, 0.12), transparent 28%),
+    radial-gradient(circle at top left, rgba(79, 70, 229, 0.08), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.1), transparent 28%),
     var(--background);
   color: var(--text);
   font-family: "Manrope", "Segoe UI", sans-serif;
@@ -81,6 +83,12 @@ textarea {
   backdrop-filter: blur(16px);
 }
 
+.soft-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
 .section-gap {
   padding: 4.5rem 0;
 }
@@ -108,14 +116,22 @@ textarea {
   color: white;
   font-weight: 700;
   background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-  box-shadow: 0 16px 32px rgba(15, 139, 141, 0.28);
+  box-shadow: 0 16px 32px rgba(79, 70, 229, 0.28);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 36px rgba(15, 139, 141, 0.33);
+  box-shadow: 0 20px 36px rgba(79, 70, 229, 0.33);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+  box-shadow: none;
 }
 
 .btn-secondary {
@@ -150,8 +166,47 @@ textarea {
   margin: 0;
 }
 
+.hero-title {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: clamp(2.3rem, 5vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  margin: 0;
+}
+
 .muted-text {
   color: var(--muted);
+}
+
+.nav-link-active {
+  background: var(--brand);
+  color: white;
+}
+
+.number-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 999px;
+  background: var(--brand-soft);
+  color: var(--brand-dark);
+  font-weight: 800;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  background: var(--brand-soft);
+  color: var(--brand-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  padding: 0.7rem 1rem;
+  text-transform: uppercase;
 }
 
 .table-wrap {
@@ -175,6 +230,10 @@ textarea {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--muted);
+}
+
+.app-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 @media (max-width: 768px) {

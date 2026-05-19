@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { BadgeCheck, Ticket, XCircle } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import EmptyState from "../components/shared/EmptyState";
@@ -48,45 +49,65 @@ export default function MyBookedSessionsPage() {
         />
         <div className="mt-10">
           {bookings.length ? (
-            <div className="glass-card table-wrap rounded-[34px] p-4">
-              <table className="app-table">
-                <thead>
-                  <tr>
-                    <th>Tutor Name</th>
-                    <th>Student Name</th>
-                    <th>Email</th>
-                    <th>Status</th>
-                    <th>Session Token</th>
-                    <th>Cancel</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {bookings.map((booking) => (
-                    <tr key={booking._id}>
-                      <td>{booking.tutorName}</td>
-                      <td>{booking.studentName}</td>
-                      <td>{booking.studentEmail}</td>
-                      <td>
-                        <span className={`rounded-full px-3 py-1 text-sm font-semibold ${booking.status === "booked" ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}>
-                          {booking.status}
-                        </span>
-                      </td>
-                      <td>{booking.sessionToken}</td>
-                      <td>
-                        <button
-                          type="button"
-                          className="btn-secondary"
-                          disabled={booking.status === "cancelled"}
-                          onClick={() => setSelectedBooking(booking)}
-                        >
-                          Cancel
-                        </button>
-                      </td>
+            <>
+              <div className="mb-6 grid gap-4 md:grid-cols-3">
+                <article className="soft-card rounded-[24px] p-5">
+                  <BadgeCheck size={20} className="text-[var(--brand)]" />
+                  <p className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Active Status</p>
+                  <p className="mt-2 text-base font-semibold muted-text">Booked and cancelled sessions update directly from the database.</p>
+                </article>
+                <article className="soft-card rounded-[24px] p-5">
+                  <Ticket size={20} className="text-[var(--brand)]" />
+                  <p className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Session Tokens</p>
+                  <p className="mt-2 text-base font-semibold muted-text">Every successful booking keeps a digital token for easy verification later.</p>
+                </article>
+                <article className="soft-card rounded-[24px] p-5">
+                  <XCircle size={20} className="text-[var(--brand)]" />
+                  <p className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Cancellation Control</p>
+                  <p className="mt-2 text-base font-semibold muted-text">Cancel from here whenever plans change, with a confirmation step built in.</p>
+                </article>
+              </div>
+
+              <div className="glass-card table-wrap rounded-[34px] p-4">
+                <table className="app-table">
+                  <thead>
+                    <tr>
+                      <th>Tutor Name</th>
+                      <th>Student Name</th>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th>Session Token</th>
+                      <th>Cancel</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {bookings.map((booking) => (
+                      <tr key={booking._id}>
+                        <td>{booking.tutorName}</td>
+                        <td>{booking.studentName}</td>
+                        <td>{booking.studentEmail}</td>
+                        <td>
+                          <span className={`rounded-full px-3 py-1 text-sm font-semibold ${booking.status === "booked" ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"}`}>
+                            {booking.status}
+                          </span>
+                        </td>
+                        <td>{booking.sessionToken}</td>
+                        <td>
+                          <button
+                            type="button"
+                            className="btn-secondary"
+                            disabled={booking.status === "cancelled"}
+                            onClick={() => setSelectedBooking(booking)}
+                          >
+                            Cancel
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           ) : (
             <EmptyState
               title="No booked sessions yet."

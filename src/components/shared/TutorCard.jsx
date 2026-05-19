@@ -1,42 +1,38 @@
-import { CalendarDays, MapPin, Wallet } from "lucide-react";
+import { CalendarDays, Clock3, Wallet } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function TutorCard({ tutor }) {
   return (
-    <article className="glass-card flex h-full flex-col rounded-[30px] p-5">
+    <article className="soft-card flex h-full flex-col overflow-hidden rounded-[28px] border border-[rgba(15,23,42,0.12)] p-5 shadow-[0_18px_36px_rgba(15,23,42,0.08)]">
       <img
         src={tutor.photo}
         alt={tutor.tutorName}
         className="h-64 w-full rounded-[24px] object-cover"
       />
-      <div className="mt-5 flex flex-1 flex-col">
-        <div className="flex items-center justify-between gap-4">
-          <span className="rounded-full bg-[var(--brand-soft)] px-3 py-1 text-sm font-semibold text-[var(--brand-dark)]">
-            {tutor.subject}
-          </span>
-          <span className="text-sm font-semibold muted-text">{tutor.teachingMode}</span>
-        </div>
+      <div className="flex flex-1 flex-col px-2 pb-2 pt-6">
+        <h3 className="text-[2rem] font-bold leading-tight">{tutor.tutorName}</h3>
+        <p className="mt-1 text-[1.2rem] text-[var(--muted)]">{tutor.subject}</p>
 
-        <h3 className="mt-4 text-2xl font-bold">{tutor.tutorName}</h3>
-        <p className="mt-1 muted-text">{tutor.institution}</p>
-
-        <div className="mt-5 space-y-3 text-sm muted-text">
-          <p className="flex items-center gap-2">
-            <CalendarDays size={16} className="text-[var(--brand)]" />
-            {new Date(tutor.sessionStartDate).toLocaleDateString()} • {tutor.availableDays}
+        <div className="mt-6 space-y-3 text-[1rem] leading-7 text-[var(--text)]">
+          <p className="flex items-start gap-2">
+            <Clock3 size={16} className="mt-1 shrink-0 text-[var(--brand)]" />
+            <span>Available: {tutor.availableDays} {tutor.availableTimeSlot}</span>
           </p>
-          <p className="flex items-center gap-2">
-            <Wallet size={16} className="text-[var(--brand)]" />
-            ${tutor.hourlyFee}/hr • {tutor.totalSlot} slots left
+          <p className="flex items-start gap-2">
+            <CalendarDays size={16} className="mt-1 shrink-0 text-[var(--brand)]" />
+            <span>Session Start Date: {new Date(tutor.sessionStartDate).toLocaleDateString(undefined, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</span>
           </p>
-          <p className="flex items-center gap-2">
-            <MapPin size={16} className="text-[var(--brand)]" />
-            {tutor.location}
+          <p className="flex items-start gap-2">
+            <Wallet size={16} className="mt-1 shrink-0 text-[var(--brand)]" />
+            <span>Fee: ${tutor.hourlyFee}/hr</span>
           </p>
         </div>
 
-        <div className="mt-6">
-          <Link to={`/tutors/${tutor._id}`} className="btn-primary inline-flex items-center justify-center">
+        <div className="mt-7">
+          <Link
+            to={`/tutors/${tutor._id}`}
+            className="inline-flex w-full items-center justify-center rounded-2xl bg-[#0d9a97] px-6 py-3 text-xl font-semibold text-white transition hover:translate-y-[-1px] hover:bg-[#0a8784]"
+          >
             Book Session
           </Link>
         </div>

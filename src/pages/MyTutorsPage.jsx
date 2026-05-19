@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CalendarClock, LayoutList, MapPinHouse } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -15,7 +16,12 @@ export default function MyTutorsPage() {
   const queryClient = useQueryClient();
   const [selectedTutor, setSelectedTutor] = useState(null);
   const [deletingTutor, setDeletingTutor] = useState(null);
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const { data: tutors = [], isLoading } = useQuery({
     queryKey: ["my-tutors"],
@@ -66,59 +72,79 @@ export default function MyTutorsPage() {
 
         <div className="mt-10">
           {tutors.length ? (
-            <div className="glass-card table-wrap rounded-[34px] p-4">
-              <table className="app-table">
-                <thead>
-                  <tr>
-                    <th>Tutor</th>
-                    <th>Subject</th>
-                    <th>Slots</th>
-                    <th>Session Date</th>
-                    <th>Mode</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tutors.map((tutor) => (
-                    <tr key={tutor._id}>
-                      <td>
-                        <div className="flex items-center gap-3">
-                          <img src={tutor.photo} alt={tutor.tutorName} className="h-12 w-12 rounded-2xl object-cover" />
-                          <div>
-                            <p className="font-semibold">{tutor.tutorName}</p>
-                            <p className="text-sm muted-text">{tutor.location}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>{tutor.subject}</td>
-                      <td>{tutor.totalSlot}</td>
-                      <td>{new Date(tutor.sessionStartDate).toLocaleDateString()}</td>
-                      <td>{tutor.teachingMode}</td>
-                      <td>
-                        <div className="flex gap-2">
-                          <button
-                            type="button"
-                            className="btn-secondary"
-                            onClick={() => {
-                              setSelectedTutor(tutor);
-                              reset({
-                                ...tutor,
-                                sessionStartDate: new Date(tutor.sessionStartDate).toISOString().slice(0, 10),
-                              });
-                            }}
-                          >
-                            Update
-                          </button>
-                          <button type="button" className="rounded-full bg-rose-500 px-4 py-2 font-semibold text-white" onClick={() => setDeletingTutor(tutor)}>
-                            Delete
-                          </button>
-                        </div>
-                      </td>
+            <>
+              <div className="mb-6 grid gap-4 md:grid-cols-3">
+                <article className="soft-card rounded-[24px] p-5">
+                  <LayoutList size={20} className="text-[var(--brand)]" />
+                  <p className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Published Tutors</p>
+                  <p className="mt-2 text-3xl font-black">{tutors.length}</p>
+                </article>
+                <article className="soft-card rounded-[24px] p-5">
+                  <CalendarClock size={20} className="text-[var(--brand)]" />
+                  <p className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Upcoming Sessions</p>
+                  <p className="mt-2 text-base font-semibold muted-text">Listings can be updated instantly when your dates shift.</p>
+                </article>
+                <article className="soft-card rounded-[24px] p-5">
+                  <MapPinHouse size={20} className="text-[var(--brand)]" />
+                  <p className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Delivery Modes</p>
+                  <p className="mt-2 text-base font-semibold muted-text">Keep online, offline, and hybrid options current for students.</p>
+                </article>
+              </div>
+
+              <div className="glass-card table-wrap rounded-[34px] p-4">
+                <table className="app-table">
+                  <thead>
+                    <tr>
+                      <th>Tutor</th>
+                      <th>Subject</th>
+                      <th>Slots</th>
+                      <th>Session Date</th>
+                      <th>Mode</th>
+                      <th>Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {tutors.map((tutor) => (
+                      <tr key={tutor._id}>
+                        <td>
+                          <div className="flex items-center gap-3">
+                            <img src={tutor.photo} alt={tutor.tutorName} className="h-12 w-12 rounded-2xl object-cover" />
+                            <div>
+                              <p className="font-semibold">{tutor.tutorName}</p>
+                              <p className="text-sm muted-text">{tutor.location}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>{tutor.subject}</td>
+                        <td>{tutor.totalSlot}</td>
+                        <td>{new Date(tutor.sessionStartDate).toLocaleDateString()}</td>
+                        <td>{tutor.teachingMode}</td>
+                        <td>
+                          <div className="flex gap-2">
+                            <button
+                              type="button"
+                              className="btn-secondary"
+                              onClick={() => {
+                                setSelectedTutor(tutor);
+                                reset({
+                                  ...tutor,
+                                  sessionStartDate: new Date(tutor.sessionStartDate).toISOString().slice(0, 10),
+                                });
+                              }}
+                            >
+                              Update
+                            </button>
+                            <button type="button" className="rounded-full bg-rose-500 px-4 py-2 font-semibold text-white" onClick={() => setDeletingTutor(tutor)}>
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           ) : (
             <EmptyState
               title="No tutors added yet."
