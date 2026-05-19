@@ -9,6 +9,7 @@ import MyTutorsPage from "./pages/MyTutorsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
+import ServicesPage from "./pages/ServicesPage";
 import TutorDetailsPage from "./pages/TutorDetailsPage";
 import TutorsPage from "./pages/TutorsPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -19,6 +20,7 @@ function App() {
       <Route element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="tutors" element={<TutorsPage />} />
+        <Route path="services" element={<ServicesPage />} />
         <Route
           path="tutors/:id"
           element={

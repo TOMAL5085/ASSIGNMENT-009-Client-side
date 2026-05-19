@@ -31,7 +31,7 @@ export default function TutorCard({ tutor }) {
         <div className="mt-7">
           <Link
             to={`/tutors/${tutor._id}`}
-            className="inline-flex w-full items-center justify-center rounded-2xl bg-[#0d9a97] px-6 py-3 text-xl font-semibold text-white transition hover:translate-y-[-1px] hover:bg-[#0a8784]"
+            className="btn-primary inline-flex w-full items-center justify-center text-lg"
           >
             Book Session
           </Link>

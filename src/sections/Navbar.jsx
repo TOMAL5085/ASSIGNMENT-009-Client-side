@@ -8,7 +8,7 @@ import useAuth from "../hooks/useAuth";
 const links = [
   { type: "route", to: "/", label: "Home" },
   { type: "route", to: "/tutors", label: "Tutors" },
-  { type: "anchor", href: "/#services", label: "Services" },
+  { type: "route", to: "/services", label: "Services" },
   { type: "anchor", href: "/#about", label: "About" },
   { type: "anchor", href: "/#contact", label: "Contact" },
 ];
