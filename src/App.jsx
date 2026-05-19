@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import AddTutorPage from "./pages/AddTutorPage";
+import AboutPage from "./pages/AboutPage";
 import HomePage from "./pages/HomePage";
 import AuthCallbackPage from "./pages/AuthCallbackPage";
 import LoginPage from "./pages/LoginPage";
@@ -21,6 +22,7 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="tutors" element={<TutorsPage />} />
         <Route path="services" element={<ServicesPage />} />
+        <Route path="about" element={<AboutPage />} />
         <Route
           path="tutors/:id"
           element={
