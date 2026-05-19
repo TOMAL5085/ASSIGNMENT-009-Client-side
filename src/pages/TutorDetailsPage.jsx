@@ -1,0 +1,150 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CalendarDays, Clock3, MapPin, Ticket } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
+import Modal from "../components/shared/Modal";
+import Spinner from "../components/shared/Spinner";
+import useAuth from "../hooks/useAuth";
+import useDocumentTitle from "../hooks/useDocumentTitle";
+import api from "../lib/api";
+
+export default function TutorDetailsPage() {
+  const { id } = useParams();
+  const { user } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const { register, handleSubmit, reset } = useForm();
+
+  const { data: tutor, isLoading } = useQuery({
+    queryKey: ["tutor", id],
+    queryFn: async () => {
+      const { data } = await api.get(`/api/tutors/${id}`);
+      return data;
+    },
+  });
+
+  useDocumentTitle(tutor ? tutor.tutorName : "Tutor Details");
+
+  const bookingMutation = useMutation({
+    mutationFn: async (payload) => {
+      const { data } = await api.post("/api/bookings", payload);
+      return data;
+    },
+    onSuccess: (data) => {
+      toast.success(`Booking confirmed. Your token is ${data.sessionToken}.`);
+      setIsOpen(false);
+      reset();
+      queryClient.invalidateQueries({ queryKey: ["tutor", id] });
+      queryClient.invalidateQueries({ queryKey: ["featured-tutors"] });
+      queryClient.invalidateQueries({ queryKey: ["tutors"] });
+      queryClient.invalidateQueries({ queryKey: ["my-bookings"] });
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || "Booking failed.");
+    },
+  });
+
+  if (isLoading) {
+    return <Spinner label="Loading tutor details..." />;
+  }
+
+  return (
+    <section className="section-gap">
+      <div className="main-container">
+        <div className="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
+          <img src={tutor.photo} alt={tutor.tutorName} className="glass-card h-full min-h-[460px] rounded-[34px] object-cover" />
+          <div className="glass-card rounded-[34px] p-8">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="rounded-full bg-[var(--brand-soft)] px-4 py-2 text-sm font-semibold text-[var(--brand-dark)]">
+                {tutor.subject}
+              </span>
+              <span className="rounded-full bg-[var(--surface-strong)] px-4 py-2 text-sm font-semibold">
+                {tutor.teachingMode}
+              </span>
+            </div>
+
+            <h1 className="page-title mt-5">{tutor.tutorName}</h1>
+            <p className="mt-4 text-lg leading-8 muted-text">
+              {tutor.description || "This tutor is ready to support learners with a focused, guided, and student-friendly teaching approach."}
+            </p>
+
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
+              <div className="rounded-[24px] bg-[var(--surface-strong)] p-5">
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--muted)]">Institution</p>
+                <p className="mt-2 text-xl font-bold">{tutor.institution}</p>
+              </div>
+              <div className="rounded-[24px] bg-[var(--surface-strong)] p-5">
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--muted)]">Experience</p>
+                <p className="mt-2 text-xl font-bold">{tutor.experience}</p>
+              </div>
+            </div>
+
+            <div className="mt-8 space-y-4 text-base muted-text">
+              <p className="flex items-center gap-3"><CalendarDays className="text-[var(--brand)]" size={18} /> Session date: {new Date(tutor.sessionStartDate).toLocaleDateString()}</p>
+              <p className="flex items-center gap-3"><Clock3 className="text-[var(--brand)]" size={18} /> {tutor.availableDays} • {tutor.availableTimeSlot}</p>
+              <p className="flex items-center gap-3"><MapPin className="text-[var(--brand)]" size={18} /> {tutor.location}</p>
+              <p className="flex items-center gap-3"><Ticket className="text-[var(--brand)]" size={18} /> {tutor.totalSlot} slots available • ${tutor.hourlyFee}/hr</p>
+            </div>
+
+            <button type="button" className="btn-primary mt-8" onClick={() => setIsOpen(true)}>
+              Book Session
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {isOpen ? (
+        <Modal title="Book this learning session" onClose={() => setIsOpen(false)}>
+          <form
+            className="grid gap-5 md:grid-cols-2"
+            onSubmit={handleSubmit((formData) => {
+              bookingMutation.mutate({
+                studentName: formData.studentName,
+                phone: formData.phone,
+                tutorId: tutor._id,
+                tutorName: tutor.tutorName,
+                studentEmail: user.email,
+              });
+            })}
+          >
+            <div>
+              <label className="mb-2 block font-semibold">Student Name</label>
+              <input
+                defaultValue={user.displayName || ""}
+                className="field"
+                {...register("studentName", { required: true })}
+              />
+            </div>
+            <div>
+              <label className="mb-2 block font-semibold">Phone</label>
+              <input className="field" {...register("phone", { required: true })} />
+            </div>
+            <div>
+              <label className="mb-2 block font-semibold">Tutor ID</label>
+              <input className="field" value={tutor._id} readOnly />
+            </div>
+            <div>
+              <label className="mb-2 block font-semibold">Tutor Name</label>
+              <input className="field" value={tutor.tutorName} readOnly />
+            </div>
+            <div>
+              <label className="mb-2 block font-semibold">Student Email</label>
+              <input className="field" value={user.email} readOnly />
+            </div>
+            <div>
+              <label className="mb-2 block font-semibold">Book Status</label>
+              <input className="field" value="booked" readOnly />
+            </div>
+            <div className="md:col-span-2">
+              <button type="submit" className="btn-primary" disabled={bookingMutation.isPending}>
+                {bookingMutation.isPending ? "Booking..." : "Confirm Booking"}
+              </button>
+            </div>
+          </form>
+        </Modal>
+      ) : null}
+    </section>
+  );
+}
