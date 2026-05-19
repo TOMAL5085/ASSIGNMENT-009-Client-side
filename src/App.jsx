@@ -14,11 +14,14 @@ import ServicesPage from "./pages/ServicesPage";
 import TutorDetailsPage from "./pages/TutorDetailsPage";
 import TutorsPage from "./pages/TutorsPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import ScrollToTop from "./components/shared/ScrollToTop";
 
 function App() {
   return (
-    <Routes>
-      <Route element={<MainLayout />}>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="tutors" element={<TutorsPage />} />
         <Route path="services" element={<ServicesPage />} />
@@ -70,6 +73,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
+    </>
   );
 }
 

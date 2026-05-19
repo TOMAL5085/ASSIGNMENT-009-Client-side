@@ -25,6 +25,10 @@ export default function Navbar() {
   const { user, logoutUser } = useAuth();
   const navigate = useNavigate();
 
+  const handleLinkClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   async function handleLogout() {
     await logoutUser();
     toast.success("You have been signed out successfully.");
@@ -54,6 +58,7 @@ export default function Navbar() {
               <NavLink
                 key={link.to}
                 to={link.to}
+                onClick={handleLinkClick}
                 className={({ isActive }) =>
                   `rounded-full px-4 py-2 text-sm font-semibold transition ${
                     isActive ? "nav-link-active" : "text-[var(--text)]"
