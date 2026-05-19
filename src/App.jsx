@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import AddTutorPage from "./pages/AddTutorPage";
 import HomePage from "./pages/HomePage";
+import AuthCallbackPage from "./pages/AuthCallbackPage";
 import LoginPage from "./pages/LoginPage";
 import MyBookedSessionsPage from "./pages/MyBookedSessionsPage";
 import MyTutorsPage from "./pages/MyTutorsPage";
@@ -60,6 +61,7 @@ function App() {
         />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
+        <Route path="auth-callback" element={<AuthCallbackPage />} />
         <Route path="home" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

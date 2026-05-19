@@ -24,9 +24,7 @@ export default function LoginPage() {
 
   async function handleGoogleLogin() {
     try {
-      await loginWithGoogle();
-      toast.success("Google sign-in completed.");
-      navigate(redirectTo, { replace: true });
+      await loginWithGoogle(redirectTo);
     } catch (error) {
       toast.error(error.message || "Google login failed.");
     }

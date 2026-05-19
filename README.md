@@ -6,7 +6,7 @@ MediQueue is a full-stack tutor booking web application where students can regis
 
 ## Features
 
-- Firebase email/password and Google authentication with server-issued JWT support for protected API access
+- Better Auth email/password and Google authentication with server-issued JWT support for protected API access
 - Public tutor discovery with case-insensitive search by tutor name and date-range filtering by session start date
 - Private tutor booking flow with digital session token generation and slot protection logic
 - Tutor management dashboard for creating, updating, and deleting tutor listings without a page reload
@@ -19,7 +19,7 @@ MediQueue is a full-stack tutor booking web application where students can regis
 - Vite
 - Tailwind CSS
 - React Query
-- Firebase Authentication
+- Better Auth
 - Express
 - MongoDB with Mongoose
 
@@ -29,12 +29,6 @@ Create a `.env` file with the Vite variables below:
 
 ```env
 VITE_API_URL=http://localhost:5000
-VITE_FIREBASE_API_KEY=your_key
-VITE_FIREBASE_AUTH_DOMAIN=your_domain
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
 ```
 
 ## Local Development

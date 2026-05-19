@@ -38,9 +38,7 @@ export default function RegisterPage() {
 
   async function handleGoogleLogin() {
     try {
-      await loginWithGoogle();
-      toast.success("Google account connected.");
-      navigate("/");
+      await loginWithGoogle("/");
     } catch (error) {
       toast.error(error.message || "Google sign-up failed.");
     }
