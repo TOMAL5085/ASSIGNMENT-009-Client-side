@@ -74,10 +74,10 @@ export default function TutorsPage() {
           </div>
 
           <div
-            className="rounded-[34px] px-7 py-8 text-white"
+            className="flex min-h-[320px] items-center rounded-[34px] px-7 py-8 text-white"
             style={{ background: "var(--hero-strong)" }}
           >
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid w-full gap-4 sm:grid-cols-2">
               <article className="rounded-[24px] border border-white/15 bg-white/10 p-5">
                 <Search size={20} />
                 <h3 className="mt-4 text-xl font-bold">Name search</h3>
@@ -102,15 +102,12 @@ export default function TutorsPage() {
               <span className="mb-3 block text-lg font-semibold text-[var(--text)]">
                 Search Tutor
               </span>
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={18} />
-                <input
-                  className="field pl-11"
-                  placeholder="Search tutor by name..."
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                />
-              </div>
+              <input
+                className="field"
+                placeholder="Search tutor by name..."
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+              />
             </label>
 
             <label className="block">
