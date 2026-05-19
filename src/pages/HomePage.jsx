@@ -152,9 +152,9 @@ export default function HomePage() {
             <SectionHeader
               eyebrow="Our Tutors"
               title="Meet the tutors students can book right now."
-              description="These six featured profiles come directly from the database so the homepage always feels alive and current."
+              description="Browse experienced tutors across key subjects and discover study support that fits your schedule, goals, and preferred learning style."
             />
-            <Link to="/tutors" className="btn-secondary w-fit">
+            <Link to="/tutors" className="btn-secondary w-fit lg:self-center">
               View All Tutors
             </Link>
           </div>
