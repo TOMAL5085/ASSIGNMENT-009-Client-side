@@ -1,4 +1,4 @@
-import { Menu, X } from "lucide-react";
+import { BookOpenText, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -46,15 +46,16 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_90%,transparent)]">
       <div className="main-container flex items-center justify-between gap-4 py-4">
         <Link to="/" onClick={handleLinkClick} className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--brand)] text-lg font-black text-white">
-            M
+          <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(145deg,#7167ff_0%,#4f46e5_55%,#1f2d64_100%)] shadow-[0_14px_30px_rgba(79,70,229,0.28)]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.34),_transparent_52%)]" />
+            <BookOpenText size={24} className="relative text-white" strokeWidth={2.15} />
           </div>
           <div>
-            <p className="font-[Space_Grotesk] text-[1.75rem] font-bold tracking-tight">
+            <p className="font-[Space_Grotesk] text-[1.75rem] font-bold tracking-[-0.04em] text-[var(--text)]">
               MediQueue
             </p>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-              Smart Tutor Booking
+            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-[var(--muted)]">
+              Reliable Tutor Booking
             </p>
           </div>
         </Link>
