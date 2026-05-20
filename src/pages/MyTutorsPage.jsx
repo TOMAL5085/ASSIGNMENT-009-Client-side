@@ -16,12 +16,47 @@ export default function MyTutorsPage() {
   const queryClient = useQueryClient();
   const [selectedTutor, setSelectedTutor] = useState(null);
   const [deletingTutor, setDeletingTutor] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [photoURL, setPhotoURL] = useState("");
+
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm();
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const apiKey = import.meta.env.VITE_IMGBB_KEY || "686036814b2d511101831448b476e3d2";
+      const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        const url = result.data.display_url;
+        setPhotoURL(url);
+        setValue("photo", url, { shouldValidate: true });
+        toast.success("Photo uploaded successfully!");
+      } else {
+        throw new Error("Upload failed");
+      }
+    } catch {
+      toast.error("Failed to upload image. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const { data: tutors = [], isLoading } = useQuery({
     queryKey: ["my-tutors"],
@@ -39,6 +74,7 @@ export default function MyTutorsPage() {
     onSuccess: () => {
       toast.success("Tutor details updated successfully.");
       setSelectedTutor(null);
+      setPhotoURL("");
       queryClient.invalidateQueries({ queryKey: ["my-tutors"] });
       queryClient.invalidateQueries({ queryKey: ["tutors"] });
     },
@@ -126,6 +162,7 @@ export default function MyTutorsPage() {
                               className="btn-secondary"
                               onClick={() => {
                                 setSelectedTutor(tutor);
+                                setPhotoURL(tutor.photo);
                                 reset({
                                   ...tutor,
                                   sessionStartDate: new Date(tutor.sessionStartDate).toISOString().slice(0, 10),
@@ -189,22 +226,6 @@ export default function MyTutorsPage() {
       {deletingTutor ? (
         <Modal title="Delete Tutor" onClose={() => setDeletingTutor(null)}>
           <p className="muted-text">
-            Are you sure you want to remove <strong>{deletingTutor.tutorName}</strong>? This will also remove its related booking records.
-          </p>
-          <div className="mt-8 flex gap-3">
-            <button type="button" className="btn-secondary" onClick={() => setDeletingTutor(null)}>
-              Keep Tutor
-            </button>
-            <button type="button" className="rounded-full bg-rose-500 px-6 py-3 font-semibold text-white" onClick={() => deleteMutation.mutate(deletingTutor._id)}>
-              Confirm Delete
-            </button>
-          </div>
-        </Modal>
-      ) : null}
-    </section>
-  );
-}
--text">
             Are you sure you want to remove <strong>{deletingTutor.tutorName}</strong>? This will also remove its related booking records.
           </p>
           <div className="mt-8 flex gap-3">
