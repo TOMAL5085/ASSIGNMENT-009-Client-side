@@ -1,3 +1,4 @@
+import { BookOpenText } from "lucide-react";
 
 const serviceLinks = [
   "Browse tutors by subject",
@@ -95,14 +96,16 @@ export default function Footer() {
       <div className="main-container grid gap-10 py-14 md:grid-cols-2 xl:grid-cols-4">
         <div>
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--brand)] text-lg font-black text-white">
-              M
+            <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(145deg,#7167ff_0%,#4f46e5_55%,#1f2d64_100%)] shadow-[0_14px_30px_rgba(79,70,229,0.28)]">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.34),_transparent_52%)]" />
+              <BookOpenText size={24} className="relative text-white" strokeWidth={2.15} />
             </div>
             <div>
               <h3 className="font-[Space_Grotesk] text-2xl font-bold">MediQueue</h3>
               <p className="text-sm muted-text">Your reliable tutor booking partner</p>
             </div>
           </div>
+
           <p className="mt-5 max-w-xs leading-7 muted-text">
             Discover trusted tutors, reserve class slots, and keep every learning
             session organized from a single clean dashboard.
