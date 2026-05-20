@@ -3,7 +3,9 @@ import { CalendarDays, Clock3, MapPin, ShieldCheck, Ticket } from "lucide-react"
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import fallbackTutors from "../data/fallbackTutors";
+import EmptyState from "../components/shared/EmptyState";
 import Modal from "../components/shared/Modal";
 import Spinner from "../components/shared/Spinner";
 import useAuth from "../hooks/useAuth";
@@ -13,6 +15,7 @@ import api from "../lib/api";
 export default function TutorDetailsPage() {
   const { id } = useParams();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
   const { register, handleSubmit, reset } = useForm();
@@ -20,8 +23,16 @@ export default function TutorDetailsPage() {
   const { data: tutor, isLoading } = useQuery({
     queryKey: ["tutor", id],
     queryFn: async () => {
-      const { data } = await api.get(`/api/tutors/${id}`);
-      return data;
+      try {
+        const { data } = await api.get(`/api/tutors/${id}`);
+        if (data?._id) {
+          return data;
+        }
+      } catch {
+        // Fall back to the local tutor dataset used by the tutors page.
+      }
+
+      return fallbackTutors.find((item) => item._id === id) || null;
     },
   });
 
@@ -48,6 +59,27 @@ export default function TutorDetailsPage() {
 
   if (isLoading) {
     return <Spinner label="Loading tutor details..." />;
+  }
+
+  if (!tutor) {
+    return (
+      <section className="section-gap">
+        <div className="main-container">
+          <EmptyState
+            title="Tutor details are not available right now."
+            description="This tutor could not be loaded from the server. You can return to the tutor directory and choose another available profile."
+          />
+          <div className="mt-8 flex flex-wrap gap-3">
+            <button type="button" className="btn-secondary" onClick={() => navigate(-1)}>
+              Go Back
+            </button>
+            <Link to="/tutors" className="btn-primary">
+              Browse All Tutors
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (
