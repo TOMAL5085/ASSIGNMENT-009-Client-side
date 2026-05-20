@@ -2,7 +2,7 @@ const fallbackTutors = [
   {
     _id: "6a0cb37fe16e2703f4d0ee9e",
     tutorName: "Ayesha Rahman",
-    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80",
+    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
     subject: "Mathematics",
     availableDays: "Sun - Thu",
     availableTimeSlot: "5:00 PM - 8:00 PM",

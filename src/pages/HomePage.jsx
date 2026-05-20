@@ -63,7 +63,7 @@ export default function HomePage() {
   const { data: tutors = [], isLoading } = useQuery({
     queryKey: ["featured-tutors"],
     queryFn: async () => {
-      const { data } = await api.get("/api/tutors?limit=6");
+      const { data } = await api.get("/api/tutors?limit=9");
       return data;
     },
   });
