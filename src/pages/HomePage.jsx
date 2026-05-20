@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import {
-  ArrowRight,
   CalendarCheck2,
   GraduationCap,
   ShieldCheck,
@@ -11,6 +10,7 @@ import { Link } from "react-router-dom";
 import SectionHeader from "../components/shared/SectionHeader";
 import Spinner from "../components/shared/Spinner";
 import TutorCard from "../components/shared/TutorCard";
+import HeroCarousel from "../components/shared/HeroCarousel";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import api from "../lib/api";
 
@@ -73,33 +73,7 @@ export default function HomePage() {
       <section className="section-gap">
         <div className="main-container">
           <div className="grid items-center gap-10 xl:grid-cols-[1.15fr_0.85fr]">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55 }}
-              className="rounded-[38px] border border-[var(--border)] px-7 py-10 md:px-12 md:py-14"
-              style={{ background: "var(--hero)" }}
-            >
-              <p className="mb-5 inline-flex rounded-full bg-[var(--brand-soft)] px-4 py-2 text-sm font-bold uppercase tracking-[0.22em] text-[var(--brand-dark)]">
-                Welcome to MediQueue
-              </p>
-              <h1 className="hero-title max-w-3xl">
-                Find experienced tutors and book classes without the usual back-and-forth.
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 muted-text">
-                MediQueue helps students register, discover available tutors,
-                reserve learning sessions, and manage bookings from a clean,
-                modern, and reliable interface.
-              </p>
-              <div className="mt-9 flex flex-wrap gap-4">
-                <Link to="/tutors" className="btn-primary inline-flex items-center gap-2">
-                  Book Your Tutor <ArrowRight size={18} />
-                </Link>
-                <Link to="/register" className="btn-secondary">
-                  Create Student Account
-                </Link>
-              </div>
-            </motion.div>
+            <HeroCarousel />
 
             <div className="grid gap-5">
               <div
