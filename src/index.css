@@ -197,8 +197,8 @@ textarea {
 }
 
 .nav-link-active {
-  background: var(--brand);
-  color: white;
+  background: var(--surface-strong);
+  color: var(--text);
 }
 
 .number-badge {

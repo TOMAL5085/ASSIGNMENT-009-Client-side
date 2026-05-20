@@ -80,7 +80,7 @@ export default function Navbar() {
                 key={link.label}
                 type="button"
                 onClick={handleContactClick}
-                className="rounded-full px-4 py-2 text-sm font-semibold text-[var(--text)] transition hover:text-[var(--brand)]"
+                className="rounded-full px-4 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--surface-strong)]"
               >
                 {link.label}
               </button>
@@ -178,10 +178,10 @@ export default function Navbar() {
                   key={link.to}
                   to={link.to}
                   className={({ isActive }) =>
-                    `rounded-2xl px-4 py-3 font-semibold ${
+                    `rounded-2xl px-4 py-3 font-semibold transition ${
                       isActive
-                        ? "bg-[var(--brand)] text-white"
-                        : "bg-[var(--surface)]"
+                        ? "bg-[var(--surface-strong)] text-[var(--text)]"
+                        : "bg-[var(--surface)] hover:bg-[var(--surface-strong)]"
                     }`
                   }
                   onClick={() => {
@@ -212,10 +212,10 @@ export default function Navbar() {
                     key={link.to}
                     to={link.to}
                     className={({ isActive }) =>
-                      `rounded-2xl px-4 py-3 font-semibold ${
+                      `rounded-2xl px-4 py-3 font-semibold transition ${
                         isActive
-                          ? "bg-[var(--brand)] text-white"
-                          : "bg-[var(--surface)]"
+                          ? "bg-[var(--surface-strong)] text-[var(--text)]"
+                          : "bg-[var(--surface)] hover:bg-[var(--surface-strong)]"
                       }`
                     }
                     onClick={() => {
