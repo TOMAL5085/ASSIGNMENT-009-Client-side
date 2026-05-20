@@ -62,11 +62,11 @@ export default function Navbar() {
         <nav className="hidden items-center gap-2 lg:flex">
           {links.map((link) =>
             link.type === "route" ? (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={handleLinkClick}
-                className={({ isActive }) =>
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  onClick={handleLinkClick}
+                  className={({ isActive }) =>
                   `rounded-full px-4 py-2 text-sm font-semibold transition ${
                     isActive ? "nav-link-active" : "text-[var(--text)]"
                   }`
@@ -91,6 +91,7 @@ export default function Navbar() {
                 <NavLink
                   key={link.to}
                   to={link.to}
+                  onClick={handleLinkClick}
                   className={({ isActive }) =>
                     `rounded-full px-4 py-2 text-sm font-semibold transition ${
                       isActive ? "nav-link-active" : "text-[var(--text)]"
@@ -107,10 +108,10 @@ export default function Navbar() {
           <ThemeToggle />
           {!user ? (
             <>
-              <Link to="/login" className="btn-secondary">
+              <Link to="/login" className="btn-secondary" onClick={handleLinkClick}>
                 Login
               </Link>
-              <Link to="/register" className="btn-primary">
+              <Link to="/register" className="btn-primary" onClick={handleLinkClick}>
                 Register
               </Link>
             </>
@@ -138,7 +139,10 @@ export default function Navbar() {
                   <Link
                     to="/profile"
                     className="block rounded-2xl px-4 py-3 text-sm font-semibold hover:bg-[var(--surface-strong)]"
-                    onClick={() => setMenuOpen(false)}
+                    onClick={() => {
+                      handleLinkClick();
+                      setMenuOpen(false);
+                    }}
                   >
                     Profile Page
                   </Link>
@@ -179,7 +183,10 @@ export default function Navbar() {
                         : "bg-[var(--surface)]"
                     }`
                   }
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => {
+                    handleLinkClick();
+                    setMobileOpen(false);
+                  }}
                 >
                   {link.label}
                 </NavLink>
@@ -210,7 +217,10 @@ export default function Navbar() {
                           : "bg-[var(--surface)]"
                       }`
                     }
-                    onClick={() => setMobileOpen(false)}
+                    onClick={() => {
+                      handleLinkClick();
+                      setMobileOpen(false);
+                    }}
                   >
                     {link.label}
                   </NavLink>
@@ -222,14 +232,20 @@ export default function Navbar() {
                 <Link
                   to="/login"
                   className="btn-secondary text-center"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => {
+                    handleLinkClick();
+                    setMobileOpen(false);
+                  }}
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
                   className="btn-primary text-center"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => {
+                    handleLinkClick();
+                    setMobileOpen(false);
+                  }}
                 >
                   Register
                 </Link>
@@ -239,7 +255,10 @@ export default function Navbar() {
                 <Link
                   to="/profile"
                   className="btn-secondary text-center"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => {
+                    handleLinkClick();
+                    setMobileOpen(false);
+                  }}
                 >
                   Profile
                 </Link>
