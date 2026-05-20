@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://assignment-009-server-side.onrender.com/api/$1"
+      "destination": "https://assignment-009-server-side.vercel.app/api/$1"
     },
     {
       "source": "/(.*)",
