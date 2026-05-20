@@ -64,7 +64,29 @@ export default function HomePage() {
     queryKey: ["featured-tutors"],
     queryFn: async () => {
       const { data } = await api.get("/api/tutors?limit=9");
-      return data;
+
+      // Enforce specific order for requested tutors
+      const DESIRED_ORDER = [
+        "Ayesha Rahman",
+        "Mahmud Hasan",
+        "Nusrat Jahan",
+        "Tanvir Alam",
+        "Sabbir Ahmed",
+        "Samia Chowdhury",
+        "Rafiul Karim",
+        "Israt Faria",
+        "Farzana Kabir",
+      ];
+
+      return [...data].sort((a, b) => {
+        const indexA = DESIRED_ORDER.indexOf(a.tutorName);
+        const indexB = DESIRED_ORDER.indexOf(b.tutorName);
+
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        if (indexA !== -1) return -1;
+        if (indexB !== -1) return 1;
+        return 0;
+      });
     },
   });
 

@@ -23,39 +23,62 @@ export default function TutorsPage() {
       if (startDate) params.set("startDate", startDate);
       if (endDate) params.set("endDate", endDate);
 
+      let finalTutors = [];
+
       try {
         const { data } = await api.get(`/api/tutors?${params.toString()}`);
         if (Array.isArray(data) && data.length) {
-          return data;
+          finalTutors = data;
+        } else {
+          finalTutors = [...fallbackTutors];
         }
       } catch {
-        // Fall through to a local dataset so the page remains populated during demos.
+        finalTutors = [...fallbackTutors];
       }
-
-      let localTutors = [...fallbackTutors];
 
       if (search.trim()) {
         const term = search.trim().toLowerCase();
-        localTutors = localTutors.filter((tutor) =>
+        finalTutors = finalTutors.filter((tutor) =>
           tutor.tutorName.toLowerCase().includes(term),
         );
       }
 
       if (startDate) {
         const start = new Date(startDate);
-        localTutors = localTutors.filter(
+        finalTutors = finalTutors.filter(
           (tutor) => new Date(tutor.sessionStartDate) >= start,
         );
       }
 
       if (endDate) {
         const end = new Date(endDate);
-        localTutors = localTutors.filter(
+        finalTutors = finalTutors.filter(
           (tutor) => new Date(tutor.sessionStartDate) <= end,
         );
       }
 
-      return localTutors;
+      // Enforce specific order for requested tutors
+      const DESIRED_ORDER = [
+        "Ayesha Rahman",
+        "Mahmud Hasan",
+        "Nusrat Jahan",
+        "Tanvir Alam",
+        "Sabbir Ahmed",
+        "Samia Chowdhury",
+        "Rafiul Karim",
+        "Israt Faria",
+        "Farzana Kabir",
+      ];
+
+      return [...finalTutors].sort((a, b) => {
+        const indexA = DESIRED_ORDER.indexOf(a.tutorName);
+        const indexB = DESIRED_ORDER.indexOf(b.tutorName);
+
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        if (indexA !== -1) return -1;
+        if (indexB !== -1) return 1;
+        return 0;
+      });
     },
   });
 
