@@ -155,7 +155,13 @@ export default function MyTutorsPage() {
       </div>
 
       {selectedTutor ? (
-        <Modal title="Update Tutor" onClose={() => setSelectedTutor(null)}>
+        <Modal
+          title="Update Tutor"
+          onClose={() => {
+            setSelectedTutor(null);
+            setPhotoURL("");
+          }}
+        >
           <form
             onSubmit={handleSubmit((formData) =>
               updateMutation.mutate({
@@ -164,9 +170,15 @@ export default function MyTutorsPage() {
               })
             )}
           >
-            <TutorFormFields register={register} errors={errors} />
+            <TutorFormFields
+              register={register}
+              errors={errors}
+              handleImageUpload={handleImageUpload}
+              uploading={uploading}
+              photoURL={photoURL}
+            />
             <div className="mt-8">
-              <button type="submit" className="btn-primary" disabled={updateMutation.isPending}>
+              <button type="submit" className="btn-primary" disabled={updateMutation.isPending || uploading}>
                 {updateMutation.isPending ? "Updating..." : "Save Changes"}
               </button>
             </div>
@@ -177,6 +189,22 @@ export default function MyTutorsPage() {
       {deletingTutor ? (
         <Modal title="Delete Tutor" onClose={() => setDeletingTutor(null)}>
           <p className="muted-text">
+            Are you sure you want to remove <strong>{deletingTutor.tutorName}</strong>? This will also remove its related booking records.
+          </p>
+          <div className="mt-8 flex gap-3">
+            <button type="button" className="btn-secondary" onClick={() => setDeletingTutor(null)}>
+              Keep Tutor
+            </button>
+            <button type="button" className="rounded-full bg-rose-500 px-6 py-3 font-semibold text-white" onClick={() => deleteMutation.mutate(deletingTutor._id)}>
+              Confirm Delete
+            </button>
+          </div>
+        </Modal>
+      ) : null}
+    </section>
+  );
+}
+-text">
             Are you sure you want to remove <strong>{deletingTutor.tutorName}</strong>? This will also remove its related booking records.
           </p>
           <div className="mt-8 flex gap-3">

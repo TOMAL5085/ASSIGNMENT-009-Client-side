@@ -1,3 +1,5 @@
+import { Upload } from "lucide-react";
+
 const subjectOptions = [
   "Mathematics",
   "Physics",
@@ -11,7 +13,7 @@ const subjectOptions = [
 
 const modeOptions = ["Online", "Offline", "Both"];
 
-export default function TutorFormFields({ register, errors }) {
+export default function TutorFormFields({ register, errors, handleImageUpload, uploading, photoURL }) {
   return (
     <div className="grid gap-5 md:grid-cols-2">
       <div>
@@ -20,8 +22,37 @@ export default function TutorFormFields({ register, errors }) {
         <p className="mt-2 text-sm text-rose-500">{errors.tutorName?.message}</p>
       </div>
       <div>
-        <label className="mb-2 block font-semibold">Photo URL</label>
-        <input className="field" {...register("photo", { required: "Photo URL is required." })} />
+        <label className="mb-2 block font-semibold">Tutor Photo</label>
+        <div className="relative">
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            id="photo-upload"
+            onChange={handleImageUpload}
+          />
+          <label
+            htmlFor="photo-upload"
+            className={`field flex cursor-pointer items-center justify-center gap-3 border-dashed py-3 text-center transition-all ${
+              uploading ? "opacity-50" : "hover:border-[var(--brand)]"
+            }`}
+          >
+            {uploading ? (
+              <span className="animate-pulse">Uploading...</span>
+            ) : photoURL ? (
+              <div className="flex items-center gap-3">
+                <img src={photoURL} alt="Preview" className="h-8 w-8 rounded-full object-cover" />
+                <span className="text-sm font-medium text-[var(--brand)]">Change Photo</span>
+              </div>
+            ) : (
+              <>
+                <Upload size={18} className="text-[var(--muted)]" />
+                <span className="text-[var(--muted)]">Upload photo</span>
+              </>
+            )}
+          </label>
+          <input type="hidden" {...register("photo", { required: "Photo is required." })} />
+        </div>
         <p className="mt-2 text-sm text-rose-500">{errors.photo?.message}</p>
       </div>
       <div>

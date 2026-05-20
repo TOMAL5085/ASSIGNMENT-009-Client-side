@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { BriefcaseBusiness, CalendarCheck2, MapPinned } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import TutorFormFields from "../components/forms/TutorFormFields";
 import SectionHeader from "../components/shared/SectionHeader";
@@ -11,12 +12,47 @@ import api from "../lib/api";
 export default function AddTutorPage() {
   useDocumentTitle("Add Tutor");
   const { user } = useAuth();
+  const [uploading, setUploading] = useState(false);
+  const [photoURL, setPhotoURL] = useState("");
+
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm();
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const apiKey = import.meta.env.VITE_IMGBB_KEY || "686036814b2d511101831448b476e3d2";
+      const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        const url = result.data.display_url;
+        setPhotoURL(url);
+        setValue("photo", url, { shouldValidate: true });
+        toast.success("Photo uploaded successfully!");
+      } else {
+        throw new Error("Upload failed");
+      }
+    } catch {
+      toast.error("Failed to upload image. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const mutation = useMutation({
     mutationFn: async (payload) => {
@@ -26,6 +62,7 @@ export default function AddTutorPage() {
     onSuccess: () => {
       toast.success("Tutor profile added successfully.");
       reset();
+      setPhotoURL("");
     },
     onError: () => {
       toast.error("Unable to save tutor right now.");
@@ -86,9 +123,15 @@ export default function AddTutorPage() {
               })
             )}
           >
-            <TutorFormFields register={register} errors={errors} />
+            <TutorFormFields
+              register={register}
+              errors={errors}
+              handleImageUpload={handleImageUpload}
+              uploading={uploading}
+              photoURL={photoURL}
+            />
             <div className="mt-8">
-              <button type="submit" className="btn-primary" disabled={mutation.isPending}>
+              <button type="submit" className="btn-primary" disabled={mutation.isPending || uploading}>
                 {mutation.isPending ? "Saving..." : "Submit Tutor"}
               </button>
             </div>
