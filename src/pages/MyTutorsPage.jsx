@@ -49,10 +49,12 @@ export default function MyTutorsPage() {
         setValue("photo", url, { shouldValidate: true });
         toast.success("Photo uploaded successfully!");
       } else {
-        throw new Error("Upload failed");
+        console.error("ImgBB Error:", result);
+        throw new Error(result.error?.message || "Upload failed");
       }
-    } catch {
-      toast.error("Failed to upload image. Please try again.");
+    } catch (error) {
+      console.error("Upload Error:", error);
+      toast.error(error.message || "Failed to upload image. Please try again.");
     } finally {
       setUploading(false);
     }
