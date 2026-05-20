@@ -5,6 +5,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import useDocumentTitle from "../hooks/useDocumentTitle";
+import uploadImageToImgbb from "../lib/uploadImageToImgbb";
 
 function validatePassword(password) {
   if (!/[A-Z]/.test(password)) {
@@ -41,26 +42,12 @@ export default function RegisterPage() {
     if (!file) return;
 
     setUploading(true);
-    const formData = new FormData();
-    formData.append("image", file);
 
     try {
-      const apiKey = import.meta.env.VITE_IMGBB_KEY || "686036814b2d511101831448b476e3d2";
-      const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        const url = result.data.display_url;
-        setPhotoURL(url);
-        setValue("photoURL", url, { shouldValidate: true });
-        toast.success("Photo uploaded successfully!");
-      } else {
-        console.error("ImgBB Error:", result);
-        throw new Error(result.error?.message || "Upload failed");
-      }
+      const url = await uploadImageToImgbb(file);
+      setPhotoURL(url);
+      setValue("photoURL", url, { shouldValidate: true });
+      toast.success("Photo uploaded successfully!");
     } catch (error) {
       console.error("Upload Error:", error);
       toast.error(error.message || "Failed to upload image. Please try again.");
