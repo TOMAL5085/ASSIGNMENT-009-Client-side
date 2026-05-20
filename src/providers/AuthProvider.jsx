@@ -92,7 +92,7 @@ export function AuthProvider({ children }) {
     setLoading(true);
 
     try {
-      const callbackURL = `${import.meta.env.VITE_API_URL}/api/social-complete?redirect=${encodeURIComponent(
+      const callbackURL = `${window.location.origin}/auth-callback?redirect=${encodeURIComponent(
         redirectTo
       )}`;
       const response = await authClient.signIn.social({
@@ -146,6 +146,7 @@ export function AuthProvider({ children }) {
     loginWithGoogle,
     logoutUser,
     completeSocialLogin,
+    exchangeSessionToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

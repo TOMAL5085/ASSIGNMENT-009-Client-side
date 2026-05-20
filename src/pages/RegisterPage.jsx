@@ -61,7 +61,7 @@ export default function RegisterPage() {
       } else {
         throw new Error("Upload failed");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to upload image. Please try again.");
     } finally {
       setUploading(false);

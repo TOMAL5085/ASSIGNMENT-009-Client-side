@@ -3,40 +3,55 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Spinner from "../components/shared/Spinner";
 import useAuth from "../hooks/useAuth";
 import useDocumentTitle from "../hooks/useDocumentTitle";
+import { authClient } from "../lib/auth-client";
 
 export default function AuthCallbackPage() {
   useDocumentTitle("Authenticating");
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { completeSocialLogin } = useAuth();
+  const { completeSocialLogin, exchangeSessionToken } = useAuth();
 
   useEffect(() => {
-    const token = searchParams.get("token");
-    const sessionToken = searchParams.get("sessionToken");
     const redirect = searchParams.get("redirect") || "/";
-    const id = searchParams.get("id");
-    const name = searchParams.get("name");
-    const email = searchParams.get("email");
-    const image = searchParams.get("image");
+    let cancelled = false;
 
-    if (!token || !sessionToken || !id || !email) {
-      navigate("/login", { replace: true });
-      return;
+    async function finishSocialLogin() {
+      try {
+        const { data } = await authClient.getSession();
+        const sessionToken = data?.session?.token;
+        const sessionUser = data?.user;
+
+        if (!sessionToken || !sessionUser?.id || !sessionUser?.email) {
+          navigate("/login", { replace: true });
+          return;
+        }
+
+        const exchanged = await exchangeSessionToken(sessionToken);
+
+        if (cancelled) {
+          return;
+        }
+
+        completeSocialLogin({
+          token: exchanged.token,
+          sessionToken,
+          user: exchanged.user,
+        });
+
+        navigate(redirect, { replace: true });
+      } catch {
+        if (!cancelled) {
+          navigate("/login", { replace: true });
+        }
+      }
     }
 
-    completeSocialLogin({
-      token,
-      sessionToken,
-      user: {
-        uid: id,
-        displayName: name || "MediQueue User",
-        email,
-        photoURL: image || "",
-      },
-    });
+    finishSocialLogin();
 
-    navigate(redirect, { replace: true });
-  }, [completeSocialLogin, navigate, searchParams]);
+    return () => {
+      cancelled = true;
+    };
+  }, [completeSocialLogin, exchangeSessionToken, navigate, searchParams]);
 
   return <Spinner label="Completing your sign-in..." />;
 }
