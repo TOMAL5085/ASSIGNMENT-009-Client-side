@@ -45,7 +45,6 @@ export default function RegisterPage() {
     formData.append("image", file);
 
     try {
-      // Using a demo API key if VITE_IMGBB_KEY is not provided
       const apiKey = import.meta.env.VITE_IMGBB_KEY || "686036814b2d511101831448b476e3d2";
       const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
         method: "POST",
@@ -59,10 +58,12 @@ export default function RegisterPage() {
         setValue("photoURL", url, { shouldValidate: true });
         toast.success("Photo uploaded successfully!");
       } else {
-        throw new Error("Upload failed");
+        console.error("ImgBB Error:", result);
+        throw new Error(result.error?.message || "Upload failed");
       }
-    } catch {
-      toast.error("Failed to upload image. Please try again.");
+    } catch (error) {
+      console.error("Upload Error:", error);
+      toast.error(error.message || "Failed to upload image. Please try again.");
     } finally {
       setUploading(false);
     }
