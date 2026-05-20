@@ -45,12 +45,12 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_90%,transparent)]">
       <div className="main-container flex items-center justify-between gap-4 py-4">
-        <Link to="/" onClick={handleLinkClick} className="flex flex-shrink-0 items-center gap-3">
-          <div className="relative flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(145deg,#7167ff_0%,#4f46e5_55%,#1f2d64_100%)] shadow-[0_14px_30px_rgba(79,70,229,0.28)]">
+        <Link to="/" onClick={handleLinkClick} className="flex items-center gap-3">
+          <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(145deg,#7167ff_0%,#4f46e5_55%,#1f2d64_100%)] shadow-[0_14px_30px_rgba(79,70,229,0.28)]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.34),_transparent_52%)]" />
             <BookOpenText size={24} className="relative text-white" strokeWidth={2.15} />
           </div>
-          <div className="hidden sm:block">
+          <div>
             <p className="font-[Space_Grotesk] text-[1.75rem] font-bold tracking-[-0.04em] text-[var(--text)]">
               MediQueue
             </p>
@@ -60,7 +60,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-1 xl:gap-2 lg:flex">
+        <nav className="hidden items-center gap-2 lg:flex">
           {links.map((link) =>
             link.type === "route" ? (
                 <NavLink
@@ -68,7 +68,7 @@ export default function Navbar() {
                   to={link.to}
                   onClick={handleLinkClick}
                   className={({ isActive }) =>
-                  `rounded-full px-3 xl:px-4 py-2 text-sm font-semibold transition ${
+                  `rounded-full px-4 py-2 text-sm font-semibold transition ${
                     isActive ? "nav-link-active" : "text-[var(--text)]"
                   }`
                 }
@@ -80,7 +80,7 @@ export default function Navbar() {
                 key={link.label}
                 type="button"
                 onClick={handleContactClick}
-                className="rounded-full px-3 xl:px-4 py-2 text-sm font-semibold text-[var(--text)] transition hover:text-[var(--brand)]"
+                className="rounded-full px-4 py-2 text-sm font-semibold text-[var(--text)] transition hover:text-[var(--brand)]"
               >
                 {link.label}
               </button>
@@ -94,7 +94,7 @@ export default function Navbar() {
                   to={link.to}
                   onClick={handleLinkClick}
                   className={({ isActive }) =>
-                    `rounded-full px-3 xl:px-4 py-2 text-sm font-semibold transition ${
+                    `rounded-full px-4 py-2 text-sm font-semibold transition ${
                       isActive ? "nav-link-active" : "text-[var(--text)]"
                     }`
                   }
@@ -105,7 +105,7 @@ export default function Navbar() {
             : null}
         </nav>
 
-        <div className="hidden flex-shrink-0 items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <ThemeToggle />
           {!user ? (
             <>
