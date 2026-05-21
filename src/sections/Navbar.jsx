@@ -45,12 +45,12 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_90%,transparent)]">
       <div className="main-container flex items-center justify-between gap-4 py-4">
-        <Link to="/" onClick={handleLinkClick} className="flex items-center gap-3">
+        <Link to="/" onClick={handleLinkClick} className="flex shrink-0 items-center gap-3">
           <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-[1.35rem] border border-white/12 bg-[linear-gradient(145deg,#7167ff_0%,#4f46e5_55%,#1f2d64_100%)] shadow-[0_14px_30px_rgba(79,70,229,0.28)]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.34),_transparent_52%)]" />
             <BookOpenText size={24} className="relative text-white" strokeWidth={2.15} />
           </div>
-          <div>
+          <div className="hidden sm:block">
             <p className="font-[Space_Grotesk] text-[1.75rem] font-bold tracking-[-0.04em] text-[var(--text)]">
               MediQueue
             </p>
@@ -63,11 +63,11 @@ export default function Navbar() {
         <nav className="hidden items-center gap-2 lg:flex">
           {links.map((link) =>
             link.type === "route" ? (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  onClick={handleLinkClick}
-                  className={({ isActive }) =>
+              <NavLink
+                key={link.to}
+                to={link.to}
+                onClick={handleLinkClick}
+                className={({ isActive }) =>
                   `rounded-full px-4 py-2 text-sm font-semibold transition ${
                     isActive ? "nav-link-active" : "text-[var(--text)]"
                   }`
@@ -120,7 +120,7 @@ export default function Navbar() {
             <div className="relative">
               <button
                 type="button"
-                className="flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--surface)] px-2 py-2 shadow-sm"
+                className="flex shrink-0 items-center rounded-full border border-[var(--border)] bg-[var(--surface)] p-1 shadow-sm transition hover:border-[var(--brand)]"
                 onClick={() => setMenuOpen((value) => !value)}
               >
                 <img
@@ -131,9 +131,6 @@ export default function Navbar() {
                   alt={user.displayName || "Profile"}
                   className="h-10 w-10 rounded-full object-cover"
                 />
-                <span className="pr-3 text-sm font-semibold">
-                  {user.displayName || "Learner"}
-                </span>
               </button>
               {menuOpen ? (
                 <div className="absolute right-0 mt-3 w-56 rounded-[24px] border border-[var(--border)] bg-[var(--surface)] p-3 shadow-2xl">
