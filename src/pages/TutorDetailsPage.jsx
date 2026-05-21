@@ -145,9 +145,34 @@ export default function TutorDetailsPage() {
               </div>
             </div>
 
-            <button type="button" className="btn-primary mt-8" onClick={() => setIsOpen(true)}>
-              Book Session
-            </button>
+            {(() => {
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              const sessionDate = new Date(tutor.sessionStartDate);
+              sessionDate.setHours(0, 0, 0, 0);
+
+              if (tutor.totalSlot <= 0) {
+                return (
+                  <div className="mt-8 rounded-2xl bg-rose-100 p-4 text-rose-700">
+                    <p className="font-semibold">No available slots left.</p>
+                  </div>
+                );
+              }
+
+              if (today < sessionDate) {
+                return (
+                  <div className="mt-8 rounded-2xl bg-amber-100 p-4 text-amber-700">
+                    <p className="font-semibold">Booking is not available yet for this tutor</p>
+                  </div>
+                );
+              }
+
+              return (
+                <button type="button" className="btn-primary mt-8" onClick={() => setIsOpen(true)}>
+                  Book Session
+                </button>
+              );
+            })()}
           </div>
         </div>
       </div>
