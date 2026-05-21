@@ -29,6 +29,8 @@ Create a `.env` file with the Vite variables below:
 
 ```env
 VITE_API_URL=http://localhost:5000
+
+VITE_IMGBB_KEY=your_imgbb_api_key
 ```
 
 ## Local Development
