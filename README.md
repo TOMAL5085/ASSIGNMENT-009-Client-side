@@ -1,6 +1,6 @@
 # MediQueue
 
-Live Site: `https://your-mediqueue-site.vercel.app`
+Live Site: `https://assignment-009-client-side.vercel.app`
 
 MediQueue is a full-stack tutor booking web application where students can register, sign in, browse tutors, book sessions, and manage their personal class schedule from a clean dashboard experience.
 
