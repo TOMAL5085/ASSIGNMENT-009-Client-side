@@ -120,7 +120,7 @@ export default function Navbar() {
             <div className="relative">
               <button
                 type="button"
-                className="flex shrink-0 items-center rounded-full border border-[var(--border)] bg-[var(--surface)] p-1 shadow-sm transition hover:border-[var(--brand)]"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] p-0 shadow-sm transition hover:border-[var(--brand)]"
                 onClick={() => setMenuOpen((value) => !value)}
               >
                 <img
@@ -129,7 +129,7 @@ export default function Navbar() {
                     "https://i.ibb.co/gv1x7fS/avatar-placeholder.png"
                   }
                   alt={user.displayName || "Profile"}
-                  className="h-10 w-10 rounded-full object-cover"
+                  className="aspect-square h-10 w-10 rounded-full object-cover"
                 />
               </button>
               {menuOpen ? (
